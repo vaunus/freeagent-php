@@ -1,0 +1,39 @@
+{
+    "name": "cloudmanaged/freeagent-php",
+    "description": "A simple PHP wrapper for FreeAgent API",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Israel Sotomayor",
+            "email": "israel@contactzilla.com"
+        }
+    ],
+    "keywords": [
+      "client",
+      "api",
+      "freeagent"
+    ],
+    "autoload": {
+        "psr-4": {
+          "CloudManaged\\FreeAgent": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+          "CloudManaged\\FreeAgent\\Test\\": "test/src/"
+        }
+    },
+    "repositories": [
+      {
+        "type": "vcs",
+        "url": "https://github.com/CloudManaged/oauth2-freeagent.git"
+      }
+    ],
+    "require": {
+      "php": ">=5.4.0",
+      "contactzilla/oauth2-freeagent": "dev-develop"
+    },
+    "require-dev": {
+      "phpunit/phpunit": "3.7.*"
+    }
+}
