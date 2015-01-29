@@ -15,7 +15,7 @@
     ],
     "autoload": {
         "psr-4": {
-          "CloudManaged\\FreeAgent": "src/"
+          "CloudManaged\\FreeAgent\\": "src/"
         }
     },
     "autoload-dev": {
