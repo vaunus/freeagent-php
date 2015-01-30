@@ -31,7 +31,7 @@
     ],
     "require": {
       "php": ">=5.4.0",
-      "contactzilla/oauth2-freeagent": "dev-develop"
+      "cloudmanaged/oauth2-freeagent": "dev-master"
     },
     "require-dev": {
       "phpunit/phpunit": "3.7.*"
