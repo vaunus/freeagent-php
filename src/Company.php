@@ -3,18 +3,14 @@
 namespace CloudManaged\FreeAgent;
 
 use CloudManaged\FreeAgent\Api\ApiResource;
+use CloudManaged\FreeAgent\Errors\ApiError;
 use CloudManaged\FreeAgent\Errors\CompanyError;
 
 class Company extends ApiResource
 {
-    public function __construct(FreeAgent $freeAgent)
-    {
-        parent::__construct($freeAgent);
-    }
-
     public function getCompanyUrl()
     {
-        return $this->baseURL . 'company';
+        return $this->getUrlBase() . 'company';
     }
 
     /**

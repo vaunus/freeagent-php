@@ -2,20 +2,15 @@
 
 namespace CloudManaged\FreeAgent;
 
-use CloudManaged\FreeAgent\Api\ApiError;
 use CloudManaged\FreeAgent\Api\ApiResource;
+use CloudManaged\FreeAgent\Errors\ApiError;
 use CloudManaged\FreeAgent\Errors\InvoiceError;
 
 class Invoice extends ApiResource
 {
-    public function __construct(FreeAgent $freeAgent)
-    {
-        parent::__construct($freeAgent);
-    }
-
     public function getInvoiceUrl()
     {
-        return $this->baseURL . 'invoices';
+        return $this->getUrlBase() . 'invoices';
     }
 
     /**
@@ -25,15 +20,11 @@ class Invoice extends ApiResource
      *
      * @see https://dev.freeagent.com/docs/invoices#create-an-invoice
      * @param $data
+     *
      * @return mixed
+     * @throws InvoiceError
      */
     public function createAnInvoice($data)
-    {
-        $response = $this->saveInvoiceDetails($data);
-        return $this->responseDetails(json_decode($response));
-    }
-
-    protected function saveInvoiceDetails($data)
     {
         try {
             $url = $this->getInvoiceUrl();
@@ -49,21 +40,42 @@ class Invoice extends ApiResource
      *
      * @see https://dev.freeagent.com/docs/invoices#mark-invoice-as-sent
      * @param $invoiceId
+     *
      * @return mixed
+     * @throws InvoiceError
      */
     public function markInvoiceAsSent($invoiceId)
     {
-        $url = $this->getInvoiceUrl();
-        $url = $url . '/' . $invoiceId .'/transitions/mark_as_sent';
-        return $this->update($url, []);
+        try {
+            $url = $this->getInvoiceUrl();
+            $url = $url . '/' . $invoiceId .'/transitions/mark_as_sent';
+            return $this->update($url, []);
+        } catch (ApiError $e) {
+            throw new InvoiceError($e);
+        }
     }
 
+
+    /**
+     * Email an invoice
+     *
+     * @see https://dev.freeagent.com/docs/invoices#email-an-invoice
+     * @param $invoiceId
+     * @param $params
+     *
+     * @return mixed
+     * @throws InvoiceError
+     */
     public function emailAnInvoice($invoiceId, $params)
     {
-        $url = $this->urlInvoices();
-        $url = $url . '/' . $invoiceId .'/send_email';
+        try {
+            $url = $this->getInvoiceUrl();
+            $url = $url . '/' . $invoiceId .'/send_email';
 
-        $data = ['invoice' => ['email' => $params]];
-        return $this->saveProviderData($url, $data);
+            $data = ['invoice' => ['email' => $params]];
+            return $this->save($url, $data);
+        } catch (ApiError $e) {
+            throw new InvoiceError($e);
+        }
     }
 }

@@ -2,30 +2,33 @@
 
 namespace CloudManaged\FreeAgent;
 
-class TransactionExplanation
-{
-    public function urlBankAccounts()
-    {
-        return $this->baseURL . 'bank_accounts';
-    }
+use CloudManaged\FreeAgent\Api\ApiResource;
+use CloudManaged\FreeAgent\Errors\ApiError;
+use CloudManaged\FreeAgent\Errors\TransactionError;
 
-    public function urlBankTransactionExplanation()
+class TransactionExplanation extends ApiResource
+{
+    public function getBankTransactionExplanationUrl()
     {
-        return $this->baseURL . 'bank_transaction_explanations';
+        return $this->getUrlBase() . 'bank_transaction_explanations';
     }
 
     /**
      * Create a Bank Transaction Explanation
      *
      * @param $params
-     * @return \Guzzle\Http\EntityBodyInterface|string
-     * @throws IDPException
+     *
+     * @return mixed
+     * @throws TransactionError
      */
     public function createBankTransactionExplanation($params)
     {
-        $url = $this->urlBankTransactionExplanation();
-
-        $data = ['bank_transaction_explanation' => $params];
-        return $this->saveProviderData($url, $data);
+        try {
+            $url = $this->getBankTransactionExplanationUrl();
+            $data = ['bank_transaction_explanation' => $params];
+            return $this->save($url, $data);
+        } catch (ApiError $e) {
+            throw new TransactionError($e);
+        }
     }
 }
