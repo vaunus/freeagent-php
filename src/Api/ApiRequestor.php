@@ -7,7 +7,7 @@ use Guzzle\Http\Exception\BadResponseException;
 use CloudManaged\FreeAgent\FreeAgent as FreeAgentConfig;
 use CloudManaged\OAuth2\Client\Provider\FreeAgent as FreeAgentAuthProvider;
 
-class ApiRequestor
+abstract class ApiRequestor
 {
     private $provider;
 
@@ -32,7 +32,12 @@ class ApiRequestor
         return $this->provider->getHttpClient();
     }
 
-    public function request($method, $url, $data)
+    protected function getUrlBase()
+    {
+        return $this->provider->urlBase();
+    }
+
+    protected function request($url, $data, $method)
     {
         if (!isset($method)) {
             throw new ApiError('There should be a method!');
@@ -41,8 +46,8 @@ class ApiRequestor
         try {
             $client = $this->getHttpClient();
 
-            if ($this->$provider->headers) {
-                $client->setDefaultOption('headers', $this->$provider->headers);
+            if ($this->provider->headers) {
+                $client->setDefaultOption('headers', $this->provider->headers);
             }
 
             $request = call_user_func_array([$client, $method], [$url, ['content-type' => 'application/json']]);

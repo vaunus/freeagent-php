@@ -5,13 +5,11 @@ namespace CloudManaged\FreeAgent\Api;
 use CloudManaged\FreeAgent\FreeAgent;
 use CloudManaged\FreeAgent\Errors\ApiError;
 
-class ApiResource
+class ApiResource extends ApiRequestor
 {
-    protected $requestor;
-
     public function __construct(FreeAgent $freeAgent)
     {
-        $this->requestor = new ApiRequestor($freeAgent);
+        parent::__construct($freeAgent);
     }
 
     protected function getResponseStatus($response)
@@ -26,6 +24,15 @@ class ApiResource
         throw new ApiError('An unknown error happened!');
     }
 
+    protected function getResponseObjectId($response)
+    {
+        $location = $response->getLocation();
+        if (!empty($location)) {
+            return end(explode("/", $location));
+        }
+        return true;
+    }
+
     /**
      * (GET)
      *
@@ -36,9 +43,9 @@ class ApiResource
      */
     protected function retrieve($url, $data)
     {
-        $response = $this->requestor->request($url, $data, 'get');
+        $response = $this->request($url, $data, 'get');
         if ($this->getResponseStatus($response)) {
-            return $response;
+            return $this->getResponseObjectId($response);
         }
     }
 
@@ -52,9 +59,9 @@ class ApiResource
      */
     protected function save($url, $data)
     {
-        $response = $this->requestor->request($url, $data, 'post');
+        $response = $this->request($url, $data, 'post');
         if ($this->getResponseStatus($response)) {
-            return $response;
+            return $this->getResponseObjectId($response);
         }
     }
 
@@ -68,7 +75,9 @@ class ApiResource
      */
     protected function update($url, $data)
     {
-        $response = $this->requestor->request($url, $data, 'put');
-        return $this->getResponseStatus($response);
+        $response = $this->request($url, $data, 'put');
+        if ($this->getResponseStatus($response)) {
+            return $this->getResponseObjectId($response);
+        }
     }
 }
