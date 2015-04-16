@@ -12,7 +12,6 @@ namespace CloudManaged\FreeAgent\Entities\Invoice;
  * discount_percent
  * dated_on (Required)
  * due_on
- * exchange_rate
  * payment_terms_in_days (Required)
  * currency
  * ec_status
@@ -70,7 +69,6 @@ class InvoiceEntity extends AbstractEntity implements EntityInterface
         $this->comments              = $attributes['comments'];
         $this->discount_percent      = $attributes['discount_percent'];
         $this->dated_on              = $attributes['dated_on'];
-        $this->exchange_rate         = $attributes['exchange_rate'];
         $this->payment_terms_in_days = $attributes['payment_terms_in_days'];
         $this->currency              = $attributes['currency'];
         $this->ec_status             = $attributes['ec_status'];
