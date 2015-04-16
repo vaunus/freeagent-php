@@ -38,11 +38,16 @@ class ApiResource extends ApiRequestor
      *
      * @param $url
      * @param $data
+     * @param array $params
      * @return mixed
      * @throws ApiError
      */
-    protected function retrieve($url, $data)
+    protected function retrieve($url, $data, $params = [])
     {
+        if (!empty($params)) {
+            $url = $url . '?' . http_build_query($params);
+        }
+
         $response = $this->request($url, $data, 'get');
         if ($this->getResponseStatus($response)) {
             return $this->getResponseObjectId($response);

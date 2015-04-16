@@ -4,7 +4,7 @@ namespace CloudManaged\FreeAgent;
 
 use CloudManaged\FreeAgent\Api\ApiResource;
 use CloudManaged\FreeAgent\Errors\ApiError;
-use CloudManaged\FreeAgent\Errors\TransactionError;
+use CloudManaged\FreeAgent\Errors\TransactionExplanationError;
 
 class TransactionExplanation extends ApiResource
 {
@@ -19,7 +19,7 @@ class TransactionExplanation extends ApiResource
      * @param $params
      *
      * @return mixed
-     * @throws TransactionError
+     * @throws TransactionExplanationError
      */
     public function createBankTransactionExplanation($params)
     {
@@ -28,7 +28,7 @@ class TransactionExplanation extends ApiResource
             $data = ['bank_transaction_explanation' => $params];
             return $this->save($url, $data);
         } catch (ApiError $e) {
-            throw new TransactionError($e);
+            throw new TransactionExplanationError($e);
         }
     }
 }

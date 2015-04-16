@@ -1,6 +1,6 @@
 <?php
 
-namespace CloudManaged\FreeAgent\Entities\Transaction;
+namespace CloudManaged\FreeAgent\Entities\TransactionExplanation;
 
 /**
  * Class Transaction Explanation
@@ -32,7 +32,7 @@ namespace CloudManaged\FreeAgent\Entities\Transaction;
  *          image/gif
  *          application/x-pdf
  *
- * @package CloudManaged\FreeAgent\Entities\Transaction
+ * @package CloudManaged\FreeAgent\Entities\TransactionExplanation
  */
 class TransactionExplanationEntity extends AbstractEntity implements EntityInterface
 {
