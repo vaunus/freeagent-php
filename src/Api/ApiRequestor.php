@@ -50,8 +50,13 @@ abstract class ApiRequestor
                 $client->setDefaultOption('headers', $this->provider->headers);
             }
 
-            $request = call_user_func_array([$client, $method], [$url, ['content-type' => 'application/json']]);
-            $request->setBody(json_encode($data));
+            if (!empty($data)) {
+                $request = call_user_func_array([$client, $method], [$url, ['content-type' => 'application/json']]);
+                $request->setBody(json_encode($data));
+            } else {
+                $request = call_user_func_array([$client, $method], [$url]);
+            }
+
             $response = $request->send();
         } catch (BadResponseException $e) {
             throw new ApiError($e->getResponse());

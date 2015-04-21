@@ -33,6 +33,15 @@ class ApiResource extends ApiRequestor
         return true;
     }
 
+    protected function getResponseBody($response)
+    {
+        $body = $response->json();
+        if (!empty($body)) {
+            return $body;
+        }
+        return true;
+    }
+
     /**
      * (GET)
      *
@@ -50,7 +59,7 @@ class ApiResource extends ApiRequestor
 
         $response = $this->request($url, $data, 'get');
         if ($this->getResponseStatus($response)) {
-            return $this->getResponseObjectId($response);
+            return $this->getResponseBody($response);
         }
     }
 
