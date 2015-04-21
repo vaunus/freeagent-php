@@ -78,4 +78,28 @@ class Invoice extends ApiResource
             throw new InvoiceError($e);
         }
     }
+
+    /**
+     * List all invoices related to a contact
+     *
+     * @return mixed
+     * @throws InvoiceError
+     */
+    /**
+     * @param $contactId
+     *
+     * @return mixed
+     * @throws InvoiceError
+     */
+    public function listAllInvoicesByContact($contactId)
+    {
+        try {
+            $url = $this->getInvoiceUrl();
+            $params['contact'] = $contactId;
+            $response = $this->retrieve($url, [], $params);
+            return $response['invoices'];
+        } catch (ApiError $e) {
+            throw new InvoiceError($e);
+        }
+    }
 }
