@@ -17,7 +17,8 @@ class Transaction extends ApiResource
      * List all Bank Transactions by Bank Account
      *
      * @see https://dev.freeagent.com/docs/bank_transactions
-     * @param $params will be an array of different params to filter the request as such:
+     * @param $account Bank Account Id
+     * @param array $params will be an array of different params to filter the request as such:
      *                  - Date filters
      *                      - from_date (=)
      *                      - to_date (=)
@@ -29,11 +30,13 @@ class Transaction extends ApiResource
      * @return mixed
      * @throws TransactionError
      */
-    public function listAllBankTransactionsByBankAccount($params)
+    public function listAllBankTransactionsByBankAccount($account, $params = [])
     {
         try {
             $url = $this->getBankTransactionUrl();
-            return $this->retrieve($url, [], $params);
+            $params['bank_account'] = $account;
+            $response = $this->retrieve($url, [], $params);
+            return $response['bank_transactions'];
         } catch (ApiError $e) {
             throw new TransactionError($e);
         }
@@ -43,15 +46,15 @@ class Transaction extends ApiResource
      * Get a single invoice
      *
      * @see https://dev.freeagent.com/docs/invoices
-     * @param $id
+     * @param $transaction Bank Transaction Id
      *
      * @return mixed
      * @throws TransactionError
      */
-    public function getASingleBankTransaction($id)
+    public function getASingleBankTransaction($transaction)
     {
         try {
-            $url = $this->getBankTransactionUrl() . '/' . $id;
+            $url = $this->getBankTransactionUrl() . '/' . $transaction;
             return $this->retrieve($url, []);
         } catch (ApiError $e) {
             throw new TransactionError($e);
