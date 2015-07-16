@@ -1,7 +1,6 @@
 {
     "name": "cloudmanaged/freeagent-php",
     "description": "A simple PHP wrapper for FreeAgent API",
-    "version": "0.1.0",
     "license": "MIT",
     "authors": [
         {
