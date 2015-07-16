@@ -5,6 +5,7 @@ namespace CloudManaged\FreeAgent;
 use CloudManaged\FreeAgent\Api\ApiResource;
 use CloudManaged\FreeAgent\Errors\ApiError;
 use CloudManaged\FreeAgent\Errors\CompanyError;
+use CloudManaged\FreeAgent\Entities\Company\CompanyEntity;
 
 class Company extends ApiResource
 {
@@ -23,7 +24,7 @@ class Company extends ApiResource
     public function getGeneralCompanyInformation()
     {
         $response = $this->fetchCompanyDetails();
-        return $this->companyDetails(json_decode($response));
+        return $this->companyDetails($response);
     }
 
     protected function fetchCompanyDetails()
@@ -38,7 +39,7 @@ class Company extends ApiResource
 
     protected function companyDetails($response)
     {
-        $response = (array)($response->company);
+        $response = $response['company'];
         $company = new CompanyEntity($response);
         return $company;
     }
