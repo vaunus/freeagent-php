@@ -52,7 +52,9 @@ abstract class ApiRequestor
 
             if (!empty($data)) {
                 $request = call_user_func_array([$client, $method], [$url, ['content-type' => 'application/json']]);
-                $request->setBody(json_encode($data));
+                if ($data && $method != 'get') {
+                    $request->setBody(json_encode($data));
+                }
             } else {
                 $request = call_user_func_array([$client, $method], [$url]);
             }
