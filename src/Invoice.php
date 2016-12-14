@@ -71,6 +71,8 @@ class Invoice extends ApiResource
      */
     public function emailAnInvoice($invoiceId, $params)
     {
+        file_put_contents('/tmp/stripe-to-freeagent-flow.txt', "emailAnInvoice-action \n", FILE_APPEND);
+
         try {
             $url = $this->getInvoiceUrl();
             $url = $url . '/' . $invoiceId .'/send_email';
