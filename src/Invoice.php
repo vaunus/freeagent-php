@@ -24,7 +24,6 @@ class Invoice extends ApiResource
      * @return mixed
      * @throws InvoiceError
      */
-    // THIS IS WHERE A FREEAGENT INVOICE IS SENT
     public function createAnInvoice($data)
     {
         try {
