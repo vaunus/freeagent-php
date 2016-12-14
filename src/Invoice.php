@@ -46,6 +46,8 @@ class Invoice extends ApiResource
      */
     public function markInvoiceAsSent($invoiceId)
     {
+        file_put_contents('/tmp/stripe-to-freeagent-flow.txt', "markInvoiceAsSent-action \n", FILE_APPEND);
+
         try {
             $url = $this->getInvoiceUrl();
             $url = $url . '/' . $invoiceId .'/transitions/mark_as_sent';
@@ -68,6 +70,8 @@ class Invoice extends ApiResource
      */
     public function emailAnInvoice($invoiceId, $params)
     {
+        file_put_contents('/tmp/stripe-to-freeagent-flow.txt', "emailAnInvoice-action \n", FILE_APPEND);
+
         try {
             $url = $this->getInvoiceUrl();
             $url = $url . '/' . $invoiceId .'/send_email';
