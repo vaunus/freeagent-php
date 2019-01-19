@@ -1,5 +1,5 @@
 {
-    "name": "cloudmanaged/freeagent-php",
+    "name": "vaunus/freeagent-php",
     "description": "A simple PHP wrapper for FreeAgent API",
     "license": "MIT",
     "authors": [
